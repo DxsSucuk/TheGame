@@ -599,7 +599,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         // Brings walkSpeed back up to original speed
         if (isCrouched)
         {
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+            ////transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             walkSpeed = baseWalkSpeed;
 
             isCrouched = false;
@@ -608,11 +608,12 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         // Reduces walkSpeed
         else
         {
-            transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+            ////transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
             walkSpeed = baseWalkSpeed * speedReduction;
 
             isCrouched = true;
         }
+        animator.SetBool("isCrouching", isCrouched);
     }
 
     private void HeadBob()

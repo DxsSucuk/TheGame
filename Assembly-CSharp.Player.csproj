@@ -243,7 +243,6 @@
      <None Include="Assets\Flooded_Grounds\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
      <None Include="Assets\Flooded_Grounds\PostProcessing\Resources\Shaders\MotionBlur.shader" />
      <None Include="Assets\Photon\PhotonVoice\Demos\DemoVoicePun\Audio\Reminder-public_d-291_hifi.mp3.txt" />
-     <None Include="Assets\StreamingAssets\UnityServicesProjectConfiguration.json" />
      <None Include="Assets\Flooded_Grounds\PostProcessing\Resources\Shaders\DiskKernels.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Flooded_Grounds\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
