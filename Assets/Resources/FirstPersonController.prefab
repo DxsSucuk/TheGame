@@ -346,6 +346,8 @@ GameObject:
   - component: {fileID: 4459864850019384740}
   - component: {fileID: 588328385}
   - component: {fileID: 7367708973005772494}
+  - component: {fileID: 8095850265077334278}
+  - component: {fileID: -7236854583371653037}
   m_Layer: 0
   m_Name: FirstPersonController
   m_TagString: Player
@@ -431,10 +433,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.25
+  m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!54 &4459864850019384741
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -465,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightObject: {fileID: 3805949150189888395}
   flashlightMeshRenderer: {fileID: 5383718885477866315}
+  audioListener: {fileID: 4459864851310106427}
   playerCamera: {fileID: 4459864851310106426}
   fov: 90
   invertCamera: 0
@@ -549,6 +552,42 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!95 &8095850265077334278
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459864850019384750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 4d1b1786413326041bb908536099bae1, type: 3}
+  m_Controller: {fileID: 9100000, guid: e2b346ed42b94474e8735e2e80d3776c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-7236854583371653037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459864850019384750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &4459864850190357393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,6 +1076,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 4459864850019384738}
     m_Modifications:
     - target: {fileID: -6057140222963153312, guid: 4d1b1786413326041bb908536099bae1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 4d1b1786413326041bb908536099bae1, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e2b346ed42b94474e8735e2e80d3776c, type: 2}
@@ -1108,7 +1151,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton-Low Poly
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6057140222963153312, guid: 4d1b1786413326041bb908536099bae1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4d1b1786413326041bb908536099bae1, type: 3}
 --- !u!4 &673798686452931540 stripped
 Transform:

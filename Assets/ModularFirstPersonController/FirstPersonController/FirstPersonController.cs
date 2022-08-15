@@ -24,6 +24,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     private TMP_Text nametag;
     public GameObject lightObject;
     public MeshRenderer flashlightMeshRenderer;
+    public AudioListener audioListener;
     private bool lightDelay;
 
     #region Camera Movement Variables
@@ -145,7 +146,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         nametag = GetComponentInChildren<TMP_Text>();
         walkSpeed = baseWalkSpeed;
 
@@ -160,6 +161,11 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         {
             sprintRemaining = sprintDuration;
             sprintCooldownReset = sprintCooldown;
+        }
+
+        if (!photonView.IsMine)
+        {
+            audioListener.gameObject.SetActive(false);
         }
     }
 
@@ -219,8 +225,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                 sprintBarBG.gameObject.SetActive(true);
                 sprintBar.gameObject.SetActive(true);
 
-                float screenWidth = Screen.width;
-                float screenHeight = Screen.height;
+                float screenWidth = Screen.width / 4;
+                float screenHeight = Screen.height / 4;
 
                 sprintBarWidth = screenWidth * sprintBarWidthPercent;
                 sprintBarHeight = screenHeight * sprintBarHeightPercent;
@@ -559,6 +565,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         {
             Debug.DrawRay(origin, direction * distance, Color.red);
             isGrounded = true;
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", false);
         }
         else
         {
@@ -672,7 +680,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
  FontStyle.Normal, fontSize = 12 });
         EditorGUILayout.Space();
 
-        #region Custom Setup
+#region Custom Setup
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
         GUILayout.Label("Custom Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle =
@@ -682,11 +690,13 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         (GameObject)EditorGUILayout.ObjectField(new GUIContent("Lightsource", "Lightsource attached to the Flashlight."), fpc.lightObject, typeof(GameObject), true);
         fpc.flashlightMeshRenderer =
         (MeshRenderer)EditorGUILayout.ObjectField(new GUIContent("Flashlight Meshrenderer", "Meshrenderer attached to the Flashlight."), fpc.flashlightMeshRenderer, typeof(MeshRenderer), true);
+        fpc.audioListener =
+        (AudioListener)EditorGUILayout.ObjectField(new GUIContent("Audio Listener", "Audio Listener attached to the Camera."), fpc.audioListener, typeof(AudioListener), true);
         EditorGUILayout.Space();
 
-        #endregion
+#endregion
 
-        #region Camera Setup
+#region Camera Setup
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
         GUILayout.Label("Camera Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle =
@@ -733,7 +743,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         EditorGUILayout.Space();
 
-        #region Camera Zoom Setup
+#region Camera Zoom Setup
 
         GUILayout.Label("Zoom", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontStyle =
  FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
@@ -752,11 +762,11 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
  EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while zooming in."), fpc.zoomStepTime, .1f, 10f);
         GUI.enabled = true;
 
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region Movement Setup
+#region Movement Setup
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
         GUILayout.Label("Movement Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle
@@ -773,7 +783,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         EditorGUILayout.Space();
 
-        #region Sprint
+#region Sprint
 
         GUILayout.Label("Sprint", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontStyle =
  FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
@@ -840,9 +850,9 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         EditorGUILayout.Space();
 
-        #endregion
+#endregion
 
-        #region Jump
+#region Jump
 
         GUILayout.Label("Jump", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontStyle =
  FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
@@ -859,9 +869,9 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         EditorGUILayout.Space();
 
-        #endregion
+#endregion
 
-        #region Crouch
+#region Crouch
 
         GUILayout.Label("Crouch", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontStyle =
  FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
@@ -880,11 +890,11 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
  EditorGUILayout.Slider(new GUIContent("Speed Reduction", "Determines the percent 'Walk Speed' is reduced by. 1 being no reduction, and .5 being half."), fpc.speedReduction, .1f, 1);
         GUI.enabled = true;
 
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region Head Bob
+#region Head Bob
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
@@ -905,7 +915,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
  EditorGUILayout.Vector3Field(new GUIContent("Bob Amount", "Determines the amount the joint moves in both directions on every axes."), fpc.bobAmount);
         GUI.enabled = true;
 
-        #endregion
+#endregion
 
         //Sets any changes from the prefab
         if(GUI.changed)
