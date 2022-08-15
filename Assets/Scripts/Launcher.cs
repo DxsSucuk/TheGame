@@ -8,14 +8,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     public PhotonView playerPrefab;
 
-    public Vector3 spawnpoint;
+    public Vector3[] spawnpoint;
     
     // Start is called before the first frame update
     private void Start()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint, Quaternion.identity);
+            PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
         }
         else
         {
@@ -34,6 +34,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     
     public override void OnJoinedRoom() {
         Debug.Log("Joined room");
-        PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
     }
 }
