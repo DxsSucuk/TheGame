@@ -3,7 +3,9 @@
     "references": [
         "PhotonRealtime",
         "PhotonUnityNetworking",
-        "PhotonUnityNetworking.Utilities"
+        "PhotonUnityNetworking.Utilities",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

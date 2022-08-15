@@ -4,7 +4,9 @@
         "PhotonVoice",
         "PhotonUnityNetworking",
         "PhotonRealtime",
-        "PhotonVoice.API"
+        "PhotonVoice.API",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

@@ -1,7 +1,9 @@
 {
     "name": "PhotonVoice.API",
     "references": [
-        "PhotonRealtime"
+        "PhotonRealtime",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

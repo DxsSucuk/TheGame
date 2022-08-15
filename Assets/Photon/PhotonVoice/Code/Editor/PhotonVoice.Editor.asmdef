@@ -3,7 +3,11 @@
     "references": [
         "PhotonRealtime",
         "PhotonVoice",
-        "PhotonVoice.API"
+        "PhotonVoice.API",
+        "UnityEditor.UI",
+        "UnityEngine.UI",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
