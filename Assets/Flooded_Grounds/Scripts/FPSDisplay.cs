@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class FPSDisplay : MonoBehaviour
+public class FPSDisplay : MonoBehaviourPunCallbacks
 {
 	float deltaTime = 0.0f;
 	
@@ -12,6 +13,12 @@ public class FPSDisplay : MonoBehaviour
 	
 	void OnGUI()
 	{
+		string currentRoomCode = string.Empty;
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+			currentRoomCode = PhotonNetwork.CurrentRoom.Name;
+        }
+
 		int w = Screen.width, h = Screen.height;
 		
 		GUIStyle style = new GUIStyle();
@@ -22,7 +29,7 @@ public class FPSDisplay : MonoBehaviour
 		style.normal.textColor = new Color (1, 1, 1, 1.0f);
 		float msec = deltaTime * 1000.0f;
 		float fps = 1.0f / deltaTime;
-		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+		string text = string.IsNullOrWhiteSpace(currentRoomCode) ? string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps) : string.Format("{0:0.0} ms ({1:0.} fps), room code: {2}", msec, fps, currentRoomCode);
 		GUI.Label(rect, text, style);
 	}
 }
