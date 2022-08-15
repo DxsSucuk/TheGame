@@ -17,9 +17,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void startGame()
     {
-        if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4)
+        if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4 && inputField.text.Length <= 16)
         {
-            PhotonNetwork.NickName = inputField.text;
+            PhotonNetwork.LocalPlayer.NickName = inputField.text;
         }
         else
         {
