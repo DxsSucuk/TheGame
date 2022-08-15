@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 #if UNITY_EDITOR
@@ -22,6 +23,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     private Animator animator;
     private TMP_Text nametag;
     public GameObject lightObject;
+    public MeshRenderer flashlightMeshRenderer;
     private bool lightDelay;
 
     #region Camera Movement Variables
@@ -187,6 +189,12 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         {
             nametag.gameObject.SetActive(false);
             playerCamera.gameObject.SetActive(true);
+            
+            SkinnedMeshRenderer meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            meshRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+
+            flashlightMeshRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+            
             if (lockCursor)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -672,6 +680,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         EditorGUILayout.Space();
         fpc.lightObject =
         (GameObject)EditorGUILayout.ObjectField(new GUIContent("Lightsource", "Lightsource attached to the Flashlight."), fpc.lightObject, typeof(GameObject), true);
+        fpc.flashlightMeshRenderer =
+        (MeshRenderer)EditorGUILayout.ObjectField(new GUIContent("Flashlight Meshrenderer", "Meshrenderer attached to the Flashlight."), fpc.flashlightMeshRenderer, typeof(MeshRenderer), true);
         EditorGUILayout.Space();
 
         #endregion
