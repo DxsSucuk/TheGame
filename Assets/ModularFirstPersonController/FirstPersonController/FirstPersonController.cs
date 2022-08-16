@@ -476,7 +476,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
                 // Checks if player is walking and isGrounded
                 // Will allow head bob
-                if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
+                if ((targetVelocity.x != 0 || targetVelocity.z != 0) && isGrounded)
                 {
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isSprinting", false);
