@@ -23,7 +23,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 {
     private Rigidbody rb;
     private Animator animator;
-    private TMP_Text nametag;
+    public TMP_Text nametag;
     public GameObject lightObject;
     public GameObject voiceIndicator;
     public GameObject playerUI;
@@ -154,12 +154,10 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        nametag = GetComponentInChildren<TMP_Text>();
         walkSpeed = baseWalkSpeed;
 
         crosshairObject = GetComponentInChildren<Image>();
-
-        GetComponentInChildren<AudioSource>().volume = ProtectedPlayerPrefs.GetFloat("voiceVolume", 1);
+        
         voiceIndicator.SetActive(false);
         pauseMenuUI.SetActive(false);
 
@@ -481,7 +479,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             nametag.text = photonView.Owner.NickName;
-            if (photonVoiceView.IsRecording)
+            if (photonVoiceView.IsSpeaking)
             {
                 voiceIndicator.SetActive(true);
             } else
@@ -753,6 +751,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         (AudioListener)EditorGUILayout.ObjectField(new GUIContent("Audio Listener", "Audio Listener attached to the Camera."), fpc.audioListener, typeof(AudioListener), true);
         fpc.photonVoiceView =
         (PhotonVoiceView)EditorGUILayout.ObjectField(new GUIContent("Photon Voice View", "Photon Voice View attached to the Player."), fpc.photonVoiceView, typeof(PhotonVoiceView), true);
+        fpc.nametag =
+        (TMP_Text)EditorGUILayout.ObjectField(new GUIContent("Nametag", "Nametag attached to the Player."), fpc.nametag, typeof(TMP_Text), true);
         EditorGUILayout.Space();
 
 #endregion

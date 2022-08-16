@@ -6,6 +6,7 @@ using OPS.AntiCheat.Prefs;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public TMP_Text versionText;
     public TMP_InputField inputField;
     public TMP_InputField roomCodeInputField;
+    public AudioMixer voiceMixer;
+    public AudioMixer backgroundMixer;
     private System.Random random = new System.Random();
 
     void Awake()
@@ -22,16 +25,26 @@ public class MainMenu : MonoBehaviourPunCallbacks
         versionText.text = "Version: " + Application.version;
         Application.targetFrameRate = 60;
         inputField.text = ProtectedPlayerPrefs.GetString("username", string.Empty);
+        
+        if (ProtectedPlayerPrefs.GetFloat("masterVolume", -1) > 1)
+        {
+            ProtectedPlayerPrefs.SetFloat("masterVolume", 1);
+            ProtectedPlayerPrefs.Save();
+        }
+        
         if (ProtectedPlayerPrefs.GetFloat("soundVolume", -1) > 1)
         {
             ProtectedPlayerPrefs.SetFloat("soundVolume", 1);
             ProtectedPlayerPrefs.Save();
         }
+        
         if (ProtectedPlayerPrefs.GetFloat("voiceVolume", -1) > 1)
         {
             ProtectedPlayerPrefs.SetFloat("voiceVolume", 1);
             ProtectedPlayerPrefs.Save();
         }
+        backgroundMixer.SetFloat("soundVolume", Mathf.Log10(ProtectedPlayerPrefs.GetFloat("soundVolume", 1)) * 20);
+        voiceMixer.SetFloat("voiceVolume", Mathf.Log10(ProtectedPlayerPrefs.GetFloat("voiceVolume", 1)) * 20);
     }
 
     private void Start()

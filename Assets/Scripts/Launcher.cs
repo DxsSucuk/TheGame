@@ -34,7 +34,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
+            if (PhotonNetwork.GetPhotonView(PhotonNetwork.SyncViewId) == null)
+                PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
         }
         else
         {
@@ -45,7 +46,7 @@ public class Launcher : MonoBehaviourPunCallbacks
                 PhotonNetwork.JoinRandomOrCreateRoom(null, 0, Photon.Realtime.MatchmakingMode.FillRoom, null, null, RandomString(5));
         }
 
-        AudioListener.volume = ProtectedPlayerPrefs.GetFloat("soundVolume", 1);
+        AudioListener.volume = ProtectedPlayerPrefs.GetFloat("masterVolume", 1);
         Application.targetFrameRate = 120;
     }
 
@@ -156,7 +157,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
         Debug.Log("Joined room " + PhotonNetwork.CurrentRoom.Name);
         Debug.Log("Users in this Lobby " + PhotonNetwork.CurrentRoom.PlayerCount);
-        PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
+        if (PhotonNetwork.GetPhotonView(PhotonNetwork.SyncViewId) == null)
+            PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
     }
 
     public override void OnLeftRoom()

@@ -19,10 +19,11 @@ public class PauseMenu : MonoBehaviour
 
     public void backToMenu()
     {
-        if (PhotonNetwork.IsConnected)
-            PhotonNetwork.Disconnect();
-
-        PhotonVoiceNetwork.Instance.Disconnect();
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+            PhotonNetwork.LeaveRoom();
+        }
 
         SceneManager.LoadScene(0);
     }
