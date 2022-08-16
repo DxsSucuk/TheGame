@@ -45,7 +45,7 @@ public class Launcher : MonoBehaviourPunCallbacks
                 PhotonNetwork.JoinRandomOrCreateRoom(null, 0, Photon.Realtime.MatchmakingMode.FillRoom, null, null, RandomString(5));
         }
 
-        AudioListener.volume = ProtectedPlayerPrefs.GetFloat("soundVolume", 100);
+        AudioListener.volume = ProtectedPlayerPrefs.GetFloat("soundVolume", 1);
         Application.targetFrameRate = 120;
     }
 
@@ -152,6 +152,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             connectionRetries = 0;
         }
         Debug.Log("Joined room");
+        Debug.Log("Users in this Lobby " + PhotonNetwork.CurrentRoom.PlayerCount);
         PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
     }
 

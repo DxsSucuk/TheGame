@@ -22,6 +22,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
         versionText.text = "Version: " + Application.version;
         Application.targetFrameRate = 60;
         inputField.text = ProtectedPlayerPrefs.GetString("username", string.Empty);
+        if (ProtectedPlayerPrefs.GetFloat("soundVolume", -1) > 1)
+        {
+            ProtectedPlayerPrefs.SetFloat("soundVolume", 1);
+            ProtectedPlayerPrefs.Save();
+        }
     }
 
     private void Start()
