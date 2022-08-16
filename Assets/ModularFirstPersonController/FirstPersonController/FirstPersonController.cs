@@ -152,6 +152,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         crosshairObject = GetComponentInChildren<Image>();
 
+        GetComponentInChildren<AudioSource>().volume = ProtectedPlayerPrefs.GetFloat("voiceVolume", 100);
+
         // Set internal variables
         playerCamera.fieldOfView = fov;
         originalScale = transform.localScale;
@@ -178,6 +180,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             photonStream.SendNext(animator.GetBool("isSprinting"));
             photonStream.SendNext(animator.GetBool("isJumping"));
             photonStream.SendNext(animator.GetBool("isFalling"));
+            photonStream.SendNext(animator.GetBool("isCrouching"));
         }
         else if (photonStream.IsReading)
         {
@@ -186,6 +189,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
             animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
             animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
+            animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
         }
     }
 
@@ -599,7 +603,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         // Brings walkSpeed back up to original speed
         if (isCrouched)
         {
-            ////transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             walkSpeed = baseWalkSpeed;
 
             isCrouched = false;
@@ -608,12 +612,11 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         // Reduces walkSpeed
         else
         {
-            ////transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+            transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
             walkSpeed = baseWalkSpeed * speedReduction;
 
             isCrouched = true;
         }
-        animator.SetBool("isCrouching", isCrouched);
     }
 
     private void HeadBob()

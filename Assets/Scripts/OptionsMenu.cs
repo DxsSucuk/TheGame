@@ -1,5 +1,7 @@
 using System;
 
+using OPS.AntiCheat.Prefs;
+
 using Photon.Pun;
 
 using TMPro;
@@ -11,6 +13,7 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
 {
 
     public GameObject dropdownObject;
+    public Slider volumeSlider;
     private TMP_Dropdown dropdown;
 
     void Awake()
@@ -42,5 +45,12 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
             Debug.Log("Connecting to Region " + textValue + "!");
             PhotonNetwork.ConnectToRegion(textValue);
         }
+    }
+
+    public void saveVolume()
+    {
+        ProtectedPlayerPrefs.AutoSave = true;
+        ProtectedPlayerPrefs.SetFloat("soundVolume", volumeSlider.value * 100);
+        ProtectedPlayerPrefs.SetFloat("voiceVolume", 100);
     }
 }

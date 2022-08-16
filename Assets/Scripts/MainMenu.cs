@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     void Awake()
     {
         versionText.text = "Version: " + Application.version;
+        Application.targetFrameRate = 60;
     }
 
     private void Start()

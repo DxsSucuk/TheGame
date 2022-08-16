@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using OPS.AntiCheat.Prefs;
+using Photon.Voice.PUN;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -25,6 +27,9 @@ public class Launcher : MonoBehaviourPunCallbacks
             if (!PhotonNetwork.InRoom)
                 PhotonNetwork.JoinRandomOrCreateRoom();
         }
+
+        AudioListener.volume = ProtectedPlayerPrefs.GetFloat("soundVolume", 100);
+        Application.targetFrameRate = 120;
     }
 
     public override void OnConnectedToMaster() {
