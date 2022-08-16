@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using OPS.AntiCheat.Prefs;
+using Photon.Voice.PUN;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -24,8 +25,10 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     private Animator animator;
     private TMP_Text nametag;
     public GameObject lightObject;
+    public GameObject voiceIndicator;
     public MeshRenderer flashlightMeshRenderer;
     public AudioListener audioListener;
+    public PhotonVoiceView photonVoiceView;
     private bool lightDelay;
 
     #region Camera Movement Variables
@@ -153,7 +156,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
         crosshairObject = GetComponentInChildren<Image>();
 
-        GetComponentInChildren<AudioSource>().volume = ProtectedPlayerPrefs.GetFloat("voiceVolume", 100);
+        GetComponentInChildren<AudioSource>().volume = ProtectedPlayerPrefs.GetFloat("voiceVolume", 1);
+        voiceIndicator.SetActive(false);
 
         // Set internal variables
         playerCamera.fieldOfView = fov;
@@ -251,6 +255,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             }
 
             #endregion
+            voiceIndicator.SetActive(false);
         }
         else
         {
@@ -454,6 +459,13 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             nametag.text = photonView.Owner.NickName;
+            if (photonVoiceView.IsRecording)
+            {
+                voiceIndicator.SetActive(true);
+            } else
+            {
+                voiceIndicator.SetActive(false);
+            }
         }
     }
     
@@ -707,10 +719,14 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         EditorGUILayout.Space();
         fpc.lightObject =
         (GameObject)EditorGUILayout.ObjectField(new GUIContent("Lightsource", "Lightsource attached to the Flashlight."), fpc.lightObject, typeof(GameObject), true);
+        fpc.voiceIndicator =
+        (GameObject)EditorGUILayout.ObjectField(new GUIContent("Voice Indicator Object", "Voice Indicator attached to the Player."), fpc.voiceIndicator, typeof(GameObject), true);
         fpc.flashlightMeshRenderer =
         (MeshRenderer)EditorGUILayout.ObjectField(new GUIContent("Flashlight Meshrenderer", "Meshrenderer attached to the Flashlight."), fpc.flashlightMeshRenderer, typeof(MeshRenderer), true);
         fpc.audioListener =
         (AudioListener)EditorGUILayout.ObjectField(new GUIContent("Audio Listener", "Audio Listener attached to the Camera."), fpc.audioListener, typeof(AudioListener), true);
+        fpc.photonVoiceView =
+        (PhotonVoiceView)EditorGUILayout.ObjectField(new GUIContent("Photon Voice View", "Photon Voice View attached to the Player."), fpc.photonVoiceView, typeof(PhotonVoiceView), true);
         EditorGUILayout.Space();
 
 #endregion

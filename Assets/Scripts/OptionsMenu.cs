@@ -14,12 +14,14 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
 
     public GameObject dropdownObject;
     public Slider volumeSlider;
+    public Slider voiceVolumeSlider;
     private TMP_Dropdown dropdown;
 
     void Awake()
     {
         dropdown = dropdownObject.GetComponent<TMP_Dropdown>();
         volumeSlider.value = ProtectedPlayerPrefs.GetFloat("soundVolume", 1);
+        voiceVolumeSlider.value = ProtectedPlayerPrefs.GetFloat("voiceVolume", 1);
         gameObject.SetActive(false);
     }
 
@@ -55,7 +57,7 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
     public void saveVolume()
     {
         ProtectedPlayerPrefs.SetFloat("soundVolume", volumeSlider.value);
-        ProtectedPlayerPrefs.SetFloat("voiceVolume", 1);
+        ProtectedPlayerPrefs.SetFloat("voiceVolume", voiceVolumeSlider.value);
         ProtectedPlayerPrefs.Save();
     }
 }
