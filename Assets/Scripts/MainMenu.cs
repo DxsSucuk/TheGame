@@ -122,6 +122,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("Users in this Lobby " + PhotonNetwork.CurrentRoom.PlayerCount);
         playButtonText.text = "Loading...";
         PhotonNetwork.LoadLevel(SceneManagerHelper.ActiveSceneBuildIndex + 1);
     }
