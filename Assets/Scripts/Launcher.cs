@@ -41,7 +41,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             if (!PhotonNetwork.IsConnected) 
                 PhotonNetwork.ConnectUsingSettings();
             
-            if (!PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom && PhotonNetwork.IsConnectedAndReady)
                 PhotonNetwork.JoinRandomOrCreateRoom(null, 0, Photon.Realtime.MatchmakingMode.FillRoom, null, null, RandomString(5));
         }
 
@@ -55,25 +55,28 @@ public class Launcher : MonoBehaviourPunCallbacks
                         cause,
                         PhotonNetwork.NetworkingClient.State,
                         PhotonNetwork.NetworkingClient.LoadBalancingPeer.PeerState);
-        if (this.rejoinCalled)
+        if (SceneManagerHelper.ActiveSceneBuildIndex == 1)
         {
-            Debug.LogErrorFormat("Rejoin failed, client disconnected, causes; prev.:{0} current:{1}", this.previousDisconnectCause, cause);
-            this.rejoinCalled = false;
-        }
-        else if (this.reconnectCalled)
-        {
-            Debug.LogErrorFormat("Reconnect failed, client disconnected, causes; prev.:{0} current:{1}", this.previousDisconnectCause, cause);
-            this.reconnectCalled = false;
-        }
+            if (this.rejoinCalled)
+            {
+                Debug.LogErrorFormat("Rejoin failed, client disconnected, causes; prev.:{0} current:{1}", this.previousDisconnectCause, cause);
+                this.rejoinCalled = false;
+            }
+            else if (this.reconnectCalled)
+            {
+                Debug.LogErrorFormat("Reconnect failed, client disconnected, causes; prev.:{0} current:{1}", this.previousDisconnectCause, cause);
+                this.reconnectCalled = false;
+            }
 
-        if (connectionRetries <= 3)
-        {
-            ++connectionRetries;
-            this.HandleDisconnect(cause); // add attempts counter? to avoid infinite retries?
-        }
+            if (connectionRetries <= 3)
+            {
+                ++connectionRetries;
+                this.HandleDisconnect(cause); // add attempts counter? to avoid infinite retries?
+            }
 
-        this.inRoom = false;
-        this.previousDisconnectCause = cause;
+            this.inRoom = false;
+            this.previousDisconnectCause = cause;
+        }
     }
 
     private void HandleDisconnect(DisconnectCause cause)
@@ -130,7 +133,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             connectionRetries = 0;
         }
 
-        if (!PhotonNetwork.InRoom)
+        if (!PhotonNetwork.InRoom && SceneManagerHelper.ActiveSceneBuildIndex == 1)
             PhotonNetwork.JoinRandomOrCreateRoom(null, 0, Photon.Realtime.MatchmakingMode.FillRoom, null, null, RandomString(5));
     }
 
@@ -151,7 +154,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             this.rejoinCalled = false;
             connectionRetries = 0;
         }
-        Debug.Log("Joined room");
+        Debug.Log("Joined room " + PhotonNetwork.CurrentRoom.Name);
         Debug.Log("Users in this Lobby " + PhotonNetwork.CurrentRoom.PlayerCount);
         PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
     }

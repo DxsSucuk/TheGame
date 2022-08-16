@@ -27,34 +27,49 @@ public class MainMenu : MonoBehaviourPunCallbacks
             ProtectedPlayerPrefs.SetFloat("soundVolume", 1);
             ProtectedPlayerPrefs.Save();
         }
+        if (ProtectedPlayerPrefs.GetFloat("voiceVolume", -1) > 1)
+        {
+            ProtectedPlayerPrefs.SetFloat("voiceVolume", 1);
+            ProtectedPlayerPrefs.Save();
+        }
     }
 
     private void Start()
     {
+        connectToServer();
+    }
+
+    public void connectToServer()
+    {
+        string regionValue = ProtectedPlayerPrefs.GetString("region", "AUTO");
         PhotonNetwork.ConnectUsingSettings();
-
-        /* string regionValue = ProtectedPlayerPrefs.GetString("region", "AUTO");
-        if (regionValue.Equals("AUTO"))
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.CloudRegion.ToUpper().Equals(regionValue) && !regionValue.Equals("AUTO"))
         {
-            Debug.Log("Connecting to best Region!");
+            PhotonNetwork.Disconnect();
+            if (regionValue.Equals("AUTO"))
+            {
+                Debug.Log("Connecting to best Region!");
 
 
-            PhotonNetwork.ConnectToBestCloudServer();
+                PhotonNetwork.ConnectToBestCloudServer();
+            }
+            else if (regionValue.Equals("DEV"))
+            {
+                Debug.Log("Connecting to Region " + regionValue + "!");
+                PhotonNetwork.ConnectToRegion("EU");
+            }
+            else
+            {
+                Debug.Log("Connecting to Region " + regionValue + "!");
+                PhotonNetwork.ConnectToRegion(regionValue);
+            }
         }
-        else if (regionValue.Equals("DEV"))
-        {
-            Debug.Log("Connecting to Region " + regionValue + "!");
-            PhotonNetwork.ConnectToRegion("EU");
-        }
-        else
-        {
-            Debug.Log("Connecting to Region " + regionValue + "!");
-            PhotonNetwork.ConnectToRegion(regionValue);
-        }*/
     }
 
     public void startGame()
     {
+        Debug.Log("Start Game");
+        connectToServer();
         if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4 && inputField.text.Length <= 16)
         {
             PhotonNetwork.LocalPlayer.NickName = inputField.text;
@@ -72,6 +87,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     
     public void createGame()
     {
+        Debug.Log("Creating Game");
+        connectToServer();
         if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4 && inputField.text.Length <= 16)
         {
             PhotonNetwork.LocalPlayer.NickName = inputField.text;
@@ -86,6 +103,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void joinGame()
     {
+        Debug.Log("Joining Game");
+        connectToServer();
         if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4 && inputField.text.Length <= 16)
         {
             PhotonNetwork.LocalPlayer.NickName = inputField.text;

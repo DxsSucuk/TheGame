@@ -8,6 +8,7 @@ public class PhotonChat : MonoBehaviourPun
 {
     bool isChatting = false;
     string chatInput = "";
+    public FirstPersonController firstPersonController;
 
     [System.Serializable]
     public class ChatMessage
@@ -37,23 +38,26 @@ public class PhotonChat : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.T) && !isChatting)
+        if (!firstPersonController.isPaused)
         {
-            isChatting = true;
-            chatInput = "";
-        }
-        else if (Input.GetKey(KeyCode.Escape) && isChatting)
-        {
-            isChatting = false;
-            chatInput = "";
-        }
-
-        //Hide messages after timer is expired
-        for (int i = 0; i < chatMessages.Count; i++)
-        {
-            if (chatMessages[i].timer > 0)
+            if (Input.GetKey(KeyCode.T) && !isChatting)
             {
-                chatMessages[i].timer -= Time.deltaTime;
+                isChatting = true;
+                chatInput = "";
+            }
+            else if (Input.GetKey(KeyCode.Escape) && isChatting)
+            {
+                isChatting = false;
+                chatInput = "";
+            }
+
+            //Hide messages after timer is expired
+            for (int i = 0; i < chatMessages.Count; i++)
+            {
+                if (chatMessages[i].timer > 0)
+                {
+                    chatMessages[i].timer -= Time.deltaTime;
+                }
             }
         }
     }

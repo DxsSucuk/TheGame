@@ -22,7 +22,7 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
         dropdown = dropdownObject.GetComponent<TMP_Dropdown>();
         volumeSlider.value = ProtectedPlayerPrefs.GetFloat("soundVolume", 1);
         voiceVolumeSlider.value = ProtectedPlayerPrefs.GetFloat("voiceVolume", 1);
-        gameObject.SetActive(false);
+        dropdown.SetValueWithoutNotify(dropdown.options.FindIndex(0, dropdown.options.Count, c => c.text == ProtectedPlayerPrefs.GetString("region", "AUTO")));
     }
 
     public void regionChange()
@@ -54,9 +54,14 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
         ProtectedPlayerPrefs.Save();
     }
 
-    public void saveVolume()
+    public void saveSoundVolume()
     {
         ProtectedPlayerPrefs.SetFloat("soundVolume", volumeSlider.value);
+        ProtectedPlayerPrefs.Save();
+    }
+
+    public void saveVoiceVolume()
+    {
         ProtectedPlayerPrefs.SetFloat("voiceVolume", voiceVolumeSlider.value);
         ProtectedPlayerPrefs.Save();
     }
