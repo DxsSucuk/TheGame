@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         versionText.text = "Version: " + Application.version;
         Application.targetFrameRate = 60;
+        inputField.text = ProtectedPlayerPrefs.GetString("username", string.Empty);
     }
 
     private void Start()
@@ -52,6 +53,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         if (!string.IsNullOrWhiteSpace(inputField.text) && inputField.text.Length >= 4 && inputField.text.Length <= 16)
         {
             PhotonNetwork.LocalPlayer.NickName = inputField.text;
+            ProtectedPlayerPrefs.SetString("username", inputField.text);
+            ProtectedPlayerPrefs.Save();
         }
         else
         {

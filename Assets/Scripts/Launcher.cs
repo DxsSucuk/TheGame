@@ -102,10 +102,12 @@ public class Launcher : MonoBehaviourPunCallbacks
                     Debug.Log("calling PhotonNetwork.Reconnect()");
                     this.reconnectCalled = PhotonNetwork.Reconnect();
                 }
+
                 if (!this.rejoinCalled && !this.reconnectCalled)
                 {
                     Debug.LogError("PhotonNetwork.ReconnectAndRejoin() or PhotonNetwork.Reconnect() returned false, client stays disconnected.");
                 }
+
                 break;
             case DisconnectCause.None:
             case DisconnectCause.OperationNotAllowedInCurrentState:
@@ -115,7 +117,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             case DisconnectCause.ExceptionOnConnect:
             case DisconnectCause.MaxCcuReached:
             case DisconnectCause.InvalidRegion:
-                Debug.LogErrorFormat("Disconnection we cannot automatically recover from, cause: {0}, report it if you think auto recovery is still possible", cause);
+                Debug.LogFormat("Disconnection we cannot automatically recover from, cause: {0}, report it if you think auto recovery is still possible", cause);
                 break;
         }
     }
