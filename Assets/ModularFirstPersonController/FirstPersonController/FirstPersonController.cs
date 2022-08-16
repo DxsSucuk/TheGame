@@ -69,7 +69,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     public bool playerCanMove = true;
     public float baseWalkSpeed = 5f;
     private float walkSpeed;
-    public float maxVelocityChange = 10f;
+    public float maxVelocityChange = 5f;
 
     // Internal Variables
     private bool isWalking = false;
@@ -423,7 +423,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
             #region Flashlight
 
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 if (lightObject.activeSelf && !lightDelay)
                 {
@@ -584,7 +584,21 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         // Adds force to the player rigidbody to jump
         if (isGrounded)
         {
-            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            if (isSprinting)
+            {
+                Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+
+                // Apply a force that attempts to reach our target velocity
+                targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxVelocityChange, maxVelocityChange);
+                targetVelocity.z = Mathf.Clamp(targetVelocity.z, -maxVelocityChange, maxVelocityChange);
+                targetVelocity.y = jumpPower;
+                rb.AddForce(targetVelocity, ForceMode.VelocityChange);
+            }
+            else
+            {
+                rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            }
             isGrounded = false;
             animator.SetBool("isJumping", true);
             animator.SetBool("isWalking", false);
