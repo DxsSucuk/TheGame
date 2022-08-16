@@ -4,6 +4,7 @@
 //
 // "Enable/Disable Headbob, Changed look rotations - should result in reduced camera jitters" || version 1.0.1
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -33,6 +34,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonVoiceView photonVoiceView;
     private bool lightDelay;
     public bool isPaused;
+    public bool isInWater;
 
     #region Camera Movement Variables
 
@@ -371,7 +373,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                             sprintFOVStepTime * Time.deltaTime);
 
                         // Drain sprint remaining while sprinting
-                        if (!unlimitedSprint)
+                        if (!unlimitedSprint && isWalking)
                         {
                             sprintRemaining -= 1 * Time.deltaTime;
                             if (sprintRemaining <= 0)
@@ -525,7 +527,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                 }
 
                 // All movement calculations shile sprint is active
-                if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+                if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown && !isInWater)
                 {
                     animator.SetBool("isWalking", false);
                     
@@ -573,7 +575,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                         sprintBarCG.alpha -= 3 * Time.deltaTime;
                     }
 
-                    targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+                    targetVelocity = transform.TransformDirection(targetVelocity) * (isInWater ? walkSpeed * speedReduction : walkSpeed);
 
                     // Apply a force that attempts to reach our target velocity
                     Vector3 velocity = rb.velocity;
@@ -611,10 +613,26 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            isInWater = true;
+        }  
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            isInWater = false;
+        }
+    }
+
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
-        if (isGrounded)
+        if (isGrounded && !isInWater)
         {
             if (isSprinting)
             {
@@ -648,21 +666,24 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     {
         // Stands player up to full height
         // Brings walkSpeed back up to original speed
-        if (isCrouched)
+        if (!isInWater)
         {
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-            walkSpeed = baseWalkSpeed;
+            if (isCrouched)
+            {
+                transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+                walkSpeed = baseWalkSpeed;
 
-            isCrouched = false;
-        }
-        // Crouches player down to set height
-        // Reduces walkSpeed
-        else
-        {
-            transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
-            walkSpeed = baseWalkSpeed * speedReduction;
+                isCrouched = false;
+            }
+            // Crouches player down to set height
+            // Reduces walkSpeed
+            else
+            {
+                transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+                walkSpeed = baseWalkSpeed * speedReduction;
 
-            isCrouched = true;
+                isCrouched = true;
+            }
         }
     }
 
