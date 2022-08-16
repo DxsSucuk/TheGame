@@ -131,7 +131,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
 
         if (!PhotonNetwork.InRoom)
-            PhotonNetwork.JoinRandomOrCreateRoom();
+            PhotonNetwork.JoinRandomOrCreateRoom(null, 0, Photon.Realtime.MatchmakingMode.FillRoom, null, null, RandomString(5));
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
