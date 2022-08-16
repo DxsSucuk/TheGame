@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 
+using OPS.AntiCheat.Prefs;
+
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -24,6 +26,25 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+
+        /* string regionValue = ProtectedPlayerPrefs.GetString("region", "AUTO");
+        if (regionValue.Equals("AUTO"))
+        {
+            Debug.Log("Connecting to best Region!");
+
+
+            PhotonNetwork.ConnectToBestCloudServer();
+        }
+        else if (regionValue.Equals("DEV"))
+        {
+            Debug.Log("Connecting to Region " + regionValue + "!");
+            PhotonNetwork.ConnectToRegion("EU");
+        }
+        else
+        {
+            Debug.Log("Connecting to Region " + regionValue + "!");
+            PhotonNetwork.ConnectToRegion(regionValue);
+        }*/
     }
 
     public void startGame()
@@ -34,7 +55,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.LocalPlayer.NickName = "RandomUser-" + random.Next(100);
+            PhotonNetwork.LocalPlayer.NickName = "RandomUser-" + RandomString(5);
         }
         
         playButtonText.text = "Loading...";

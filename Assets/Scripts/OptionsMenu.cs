@@ -19,6 +19,8 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
     void Awake()
     {
         dropdown = dropdownObject.GetComponent<TMP_Dropdown>();
+        volumeSlider.value = ProtectedPlayerPrefs.GetFloat("soundvolume", 100) / 100;
+        gameObject.SetActive(false);
     }
 
     public void regionChange()
@@ -45,12 +47,15 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
             Debug.Log("Connecting to Region " + textValue + "!");
             PhotonNetwork.ConnectToRegion(textValue);
         }
+
+        ProtectedPlayerPrefs.SetString("region", textValue);
+        ProtectedPlayerPrefs.Save();
     }
 
     public void saveVolume()
     {
-        ProtectedPlayerPrefs.AutoSave = true;
         ProtectedPlayerPrefs.SetFloat("soundVolume", volumeSlider.value * 100);
         ProtectedPlayerPrefs.SetFloat("voiceVolume", 100);
+        ProtectedPlayerPrefs.Save();
     }
 }
