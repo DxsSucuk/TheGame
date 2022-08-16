@@ -24,9 +24,9 @@ public class OptionsMenu : MonoBehaviourPunCallbacks
     void Awake()
     {
         dropdown = dropdownObject.GetComponent<TMP_Dropdown>();
-        masterVolumeSlider.value = ProtectedPlayerPrefs.GetFloat("masterVolume", 1);
-        soundVolumeSlider.value = ProtectedPlayerPrefs.GetFloat("soundVolume", 1);
-        voiceVolumeSlider.value = ProtectedPlayerPrefs.GetFloat("voiceVolume", 1);
+        masterVolumeSlider.SetValueWithoutNotify(ProtectedPlayerPrefs.GetFloat("masterVolume", 1));
+        soundVolumeSlider.SetValueWithoutNotify(ProtectedPlayerPrefs.GetFloat("soundVolume", 1));
+        voiceVolumeSlider.SetValueWithoutNotify(ProtectedPlayerPrefs.GetFloat("voiceVolume", 1));
         backgroundMixer.SetFloat("soundVolume", Mathf.Log10(soundVolumeSlider.value) * 20);
         voiceMixer.SetFloat("voiceVolume", Mathf.Log10(voiceVolumeSlider.value) * 20);
         dropdown.SetValueWithoutNotify(dropdown.options.FindIndex(0, dropdown.options.Count, c => c.text == ProtectedPlayerPrefs.GetString("region", "AUTO")));
