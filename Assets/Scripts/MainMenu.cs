@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         string regionValue = ProtectedPlayerPrefs.GetString("region", "AUTO");
         PhotonNetwork.ConnectUsingSettings();
-        if (PhotonNetwork.IsConnected && !PhotonNetwork.CloudRegion.ToUpper().Equals(regionValue) && !regionValue.Equals("AUTO"))
+        if (PhotonNetwork.IsConnected && PhotonNetwork.CloudRegion != null && !PhotonNetwork.CloudRegion.ToUpper().Equals(regionValue) && !regionValue.Equals("AUTO"))
         {
             PhotonNetwork.Disconnect();
             if (regionValue.Equals("AUTO"))
