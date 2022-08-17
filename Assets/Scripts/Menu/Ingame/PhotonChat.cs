@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class PhotonChat : MonoBehaviourPun
 {
-    bool isChatting = false;
+    public bool isChatting = false;
     string chatInput = "";
     public FirstPersonController firstPersonController;
 

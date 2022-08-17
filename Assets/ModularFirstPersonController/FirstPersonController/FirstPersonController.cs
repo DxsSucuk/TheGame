@@ -32,6 +32,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     public MeshRenderer flashlightMeshRenderer;
     public AudioListener audioListener;
     public PhotonVoiceView photonVoiceView;
+    private PhotonChat photonChat;
     private bool lightDelay;
     public bool isPaused;
     public bool isInWater;
@@ -157,6 +158,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         walkSpeed = baseWalkSpeed;
+        photonChat = GetComponent<PhotonChat>();
 
         crosshairObject = GetComponentInChildren<Image>();
         
@@ -259,6 +261,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             }
 
             #endregion
+
             voiceIndicator.SetActive(false);
         }
         else
@@ -273,22 +276,28 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && !photonChat.isChatting)
             {
                 if (isPaused)
                 {
                     pauseMenuUI.SetActive(false);
-                    Cursor.lockState = CursorLockMode.Locked;
+                    if (!pauseMenuUI.activeSelf)
+                    {
+                        isPaused = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
                 } else
                 {
                     pauseMenuUI.SetActive(true);
-                    Cursor.lockState = CursorLockMode.None;
+                    if (pauseMenuUI.activeSelf)
+                    {
+                        isPaused = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
                 }
-
-                isPaused = !isPaused;
             }
 
-            if (!isPaused)
+            if (!isPaused && !photonChat.isChatting)
             {
                 #region Camera
 
