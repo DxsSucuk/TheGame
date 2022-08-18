@@ -12,7 +12,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     public PhotonView playerPrefab;
 
+    public PhotonView enemyPrefab;
+
     public Vector3[] spawnpoint;
+
+    public Vector3[] enemySpawnpoints;
 
     private int connectionRetries = 0;
 
@@ -157,8 +161,12 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
         Debug.Log("Joined room " + PhotonNetwork.CurrentRoom.Name);
         Debug.Log("Users in this Lobby " + PhotonNetwork.CurrentRoom.PlayerCount);
+
         if (PhotonNetwork.GetPhotonView(PhotonNetwork.SyncViewId) == null)
             PhotonNetwork.Instantiate(playerPrefab.name, spawnpoint[new System.Random().Next(spawnpoint.Length)], Quaternion.identity);
+
+        PhotonNetwork.InstantiateRoomObject(enemyPrefab.name, enemySpawnpoints[new System.Random().Next(enemySpawnpoints.Length)], Quaternion.identity);
+        Debug.Log("Creating");
     }
 
     public override void OnLeftRoom()
