@@ -1,8 +1,12 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 
 using System.Collections;
 using System.Collections.Generic;
+
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +14,8 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public FirstPersonController firstPersonController;
+    public TMP_Text roomCodeText;
+    public TMP_Text playerListText;
     public Sprite sprite;
     public GameObject backgroundPanel;
     private Image backgroundPanelImage;
@@ -22,11 +28,9 @@ public class PauseMenu : MonoBehaviour
         backgroundPanelImage = backgroundPanel.GetComponent<Image>();
         backgroundPanelImage.sprite = sprite;
         backgroundPanelImage.color = new Color(0.235f, 0.235f, 0.235f, 0.588f);
-    }
 
-    private void Update()
-    {
-        Debug.Log(backgroundPanelImage.color);
+        if (PhotonNetwork.CurrentRoom != null)
+            roomCodeText.text = PhotonNetwork.CurrentRoom.Name;
     }
 
     private void OnEnable()
@@ -35,6 +39,17 @@ public class PauseMenu : MonoBehaviour
         optionMenu.SetActive(false);
         backgroundPanelImage.sprite = sprite;
         backgroundPanelImage.color = new Color(0.235f, 0.235f, 0.235f, 0.588f);
+    }
+
+    private void Update()
+    {
+        string text = string.Empty;
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            text += player.NickName + (player.IsMasterClient ? " [H]" : string.Empty) + "\n";
+        }
+
+        playerListText.text = text.Trim();
     }
 
     public void resume()
