@@ -285,7 +285,6 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                     {
                         isPaused = false;
                         Cursor.lockState = CursorLockMode.Locked;
-                        crosshairObject.gameObject.SetActive(true);
                     }
                 } else
                 {
@@ -294,7 +293,6 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                     {
                         isPaused = true;
                         Cursor.lockState = CursorLockMode.None;
-                        crosshairObject.gameObject.SetActive(false);
                     }
                 }
             }

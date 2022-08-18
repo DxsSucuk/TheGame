@@ -38,7 +38,7 @@ public class PhotonChat : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (!firstPersonController.isPaused)
+        if (!firstPersonController.isPaused && photonView.IsMine)
         {
             if (Input.GetKey(KeyCode.T) && !isChatting)
             {
