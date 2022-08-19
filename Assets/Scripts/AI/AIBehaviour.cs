@@ -88,6 +88,10 @@ namespace Assets.Scripts
             if (playerInSightRange) ChasePlayer();
         }
 
+        private void FixedUpdate()
+        {
+        }
+
         GameObject GetClosestEnemy(FirstPersonController[] enemies)
         {
             GameObject bestTarget = null;
@@ -109,23 +113,27 @@ namespace Assets.Scripts
 
         private void Patroling()
         {
-            if (!walkPointSet && !agent.pathPending) SearchWalkPoint();
+            if (!agent.pathPending)
+            {
+                if (!walkPointSet) SearchWalkPoint();
 
-            if (walkPointSet && !agent.pathPending)
-            {
-                animator.SetBool("isWalking", true);
-                agent.SetDestination(walkPoint);
-                transform.LookAt(walkPoint);
-            } else
-            {
-                animator.SetBool("isWalking", false);
+                if (walkPointSet)
+                {
+                    animator.SetBool("isWalking", true);
+                    agent.SetDestination(walkPoint);
+                    transform.LookAt(walkPoint);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", false);
+                }
+
+                Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+                //Walkpoint reached
+                if (distanceToWalkPoint.magnitude < 10f)
+                    walkPointSet = false;
             }
-
-            Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-            //Walkpoint reached
-            if (distanceToWalkPoint.magnitude < 10f)
-                walkPointSet = false;
         }
 
         private void SearchWalkPoint()
@@ -142,6 +150,7 @@ namespace Assets.Scripts
 
         private void ChasePlayer()
         {
+            walkPointSet = false;
             if (targetPlayer == null)
             {
                 targetPlayer = GetClosestEnemy(GameObject.FindObjectsOfType<FirstPersonController>()).transform;
@@ -160,8 +169,9 @@ namespace Assets.Scripts
             {
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isSprinting", true);
-                agent.SetDestination(targetPlayer.position);
-                transform.LookAt(targetPlayer.position);
+                Vector3 positonOfUser = targetPlayer.position;
+                agent.SetDestination(positonOfUser);
+                transform.LookAt(new Vector3(positonOfUser.x, positonOfUser.z));
             } else
             {
                 animator.SetBool("isSprinting", false);
@@ -178,6 +188,12 @@ namespace Assets.Scripts
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, sightRange);
+            if (walkPoint != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(walkPoint, 10);
+                Gizmos.DrawLine(transform.position, walkPoint);
+            }
         }
     }
 }
