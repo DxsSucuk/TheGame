@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3305368}
   - component: {fileID: 2384666}
   - component: {fileID: 6475504}
+  - component: {fileID: 4913797963278010437}
   m_Layer: 0
   m_Name: Struct_Fence1_Mid_A
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 99d4efbb51119b3448b55253e13ac00c, type: 3}
+--- !u!208 &4913797963278010437
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124836}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.196, y: 0.99000007, z: 0.453}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -3.196, y: 0.989, z: 0.046000004}
+  m_TimeToStationary: 0.5

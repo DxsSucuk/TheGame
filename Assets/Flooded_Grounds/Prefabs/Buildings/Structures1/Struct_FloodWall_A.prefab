@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482554}
   - component: {fileID: 20580144}
+  - component: {fileID: 6058715027907064152}
   m_Layer: 0
   m_Name: Struct_FloodWall_A
   m_TagString: Untagged
@@ -145,6 +146,22 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2311742}
   m_Enabled: 1
+--- !u!208 &6058715027907064152
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167176}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 6, y: 4.5, z: 2.75}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -5.75, y: 4, z: -1.5}
+  m_TimeToStationary: 0.5
 --- !u!1 &178938
 GameObject:
   m_ObjectHideFlags: 0

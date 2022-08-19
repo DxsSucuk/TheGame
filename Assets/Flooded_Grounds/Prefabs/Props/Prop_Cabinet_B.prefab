@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 408488}
   - component: {fileID: 20548814}
+  - component: {fileID: 4880157303808640168}
   m_Layer: 8
   m_Name: Prop_Cabinet_B
   m_TagString: Untagged
@@ -251,3 +252,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2345406}
   m_Enabled: 1
+--- !u!208 &4880157303808640168
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126718}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.125, y: 2, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0.45}
+  m_TimeToStationary: 0.5

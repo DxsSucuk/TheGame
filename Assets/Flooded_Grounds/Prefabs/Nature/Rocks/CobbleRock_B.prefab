@@ -259,6 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 410414}
   - component: {fileID: 20588830}
+  - component: {fileID: 5864720680060340381}
   m_Layer: 0
   m_Name: CobbleRock_B
   m_TagString: Untagged
@@ -311,3 +312,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2319308}
   m_Enabled: 1
+--- !u!208 &5864720680060340381
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156448}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.625, y: 0.5, z: 0.625}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.05, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5

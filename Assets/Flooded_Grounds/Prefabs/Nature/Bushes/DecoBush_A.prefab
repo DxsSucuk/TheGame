@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3331486}
   - component: {fileID: 2391070}
   - component: {fileID: 6401716}
+  - component: {fileID: 2644027292346945631}
   m_Layer: 0
   m_Name: DecoBush_A
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2ec06634d560e75429179e080d686b96, type: 3}
+--- !u!208 &2644027292346945631
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197674}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.8500004, y: 1.585, z: 4.5340004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -4.7260003, y: 1.5200001, z: 4.546}
+  m_TimeToStationary: 0.5

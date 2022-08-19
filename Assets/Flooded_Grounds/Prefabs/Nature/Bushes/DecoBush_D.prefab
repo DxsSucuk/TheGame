@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3324528}
   - component: {fileID: 2339440}
   - component: {fileID: 6593184}
+  - component: {fileID: 2484527253637862740}
   m_Layer: 0
   m_Name: DecoBush_D
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.0294194, y: 3.179661, z: 18.676584}
   m_Center: {x: -1.9267849, y: 1.5410348, z: 9.243421}
+--- !u!208 &2484527253637862740
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101084}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.015, y: 1.59, z: 9.338}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.927, y: 1.5410001, z: 9.243}
+  m_TimeToStationary: 0.5

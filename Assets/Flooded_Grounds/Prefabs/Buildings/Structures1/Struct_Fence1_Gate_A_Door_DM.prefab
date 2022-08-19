@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3333540}
   - component: {fileID: 2347908}
   - component: {fileID: 6488360}
+  - component: {fileID: 1412623232408027966}
   m_Layer: 0
   m_Name: Struct_Fence1_Gate_A_Door_DM
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ae21f94be6c7d374db2a242be202ccec, type: 3}
+--- !u!208 &1412623232408027966
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117666}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.373, y: 1.881, z: 0.321}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.3290001, y: 1.8800001, z: -0.12100001}
+  m_TimeToStationary: 0.5
