@@ -17,7 +17,6 @@ public class PauseMenu : MonoBehaviour
     public TMP_Text roomCodeText;
     public TMP_Text playerListText;
     public Sprite sprite;
-    public GameObject backgroundPanel;
     private Image backgroundPanelImage;
     public GameObject pauseMenu;
     public GameObject optionMenu;
@@ -25,7 +24,7 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         optionMenu.SetActive(false);
-        backgroundPanelImage = backgroundPanel.GetComponent<Image>();
+        backgroundPanelImage = GetComponent<Image>();
         backgroundPanelImage.sprite = sprite;
         backgroundPanelImage.color = new Color(0.235f, 0.235f, 0.235f, 0.588f);
 

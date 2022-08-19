@@ -66,8 +66,6 @@ public class PauseOptionsMenu : MonoBehaviourPunCallbacks
         dropdownGraphic.SetValueWithoutNotify(QualitySettings.GetQualityLevel());
 
         dropdownScreen.SetValueWithoutNotify((int)Screen.fullScreenMode);
-
-        gameObject.SetActive(false);
     }
 
     public void resolutionChange()
