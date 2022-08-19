@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3333048}
   - component: {fileID: 2394788}
   - component: {fileID: 6592372}
+  - component: {fileID: 1527322085899960638}
   m_Layer: 0
   m_Name: Villa2_Deco_Handrail1_Mid_A_DM
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 1.0999999, z: 0.20000458}
   m_Center: {x: -2, y: 0.5500001, z: -0.0000009611249}
+--- !u!208 &1527322085899960638
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130464}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.55, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -2, y: 0.55, z: 0}
+  m_TimeToStationary: 0.5

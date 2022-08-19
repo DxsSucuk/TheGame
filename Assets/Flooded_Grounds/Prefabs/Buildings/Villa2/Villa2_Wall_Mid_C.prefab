@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3306936}
   - component: {fileID: 2345876}
   - component: {fileID: 6514818}
+  - component: {fileID: 4954081606858286823}
   m_Layer: 0
   m_Name: Villa2_Wall_Mid_C
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 6, z: 0.63507724}
   m_Center: {x: 2, y: 3, z: -0.013721466}
+--- !u!208 &4954081606858286823
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181010}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 3.0000002, z: 0.397}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2, y: 3.0000002, z: 0.066}
+  m_TimeToStationary: 0.5

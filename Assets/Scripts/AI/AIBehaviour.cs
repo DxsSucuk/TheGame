@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
 
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,9 +17,6 @@ namespace Assets.Scripts
         public Transform targetPlayer;
 
         public LayerMask whatIsPlayer;
-        public LayerMask whatIsGround;
-
-        public bool onGround;
 
         //Patroling
         public Vector3 walkPoint;
@@ -31,15 +30,14 @@ namespace Assets.Scripts
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            agent.updateRotation = true;
-            agent.updateUpAxis = true;
+            StartCoroutine(UpdateAIPath());
         }
 
         public void OnPhotonSerializeView(PhotonStream photonStream, PhotonMessageInfo info)
         {
             if (photonStream.IsWriting)
             {
-                photonStream.SendNext(false);
+                photonStream.SendNext("AI");
                 photonStream.SendNext(animator.GetBool("isWalking"));
                 photonStream.SendNext(animator.GetBool("isSprinting"));
                 photonStream.SendNext(animator.GetBool("isJumping"));
@@ -48,39 +46,21 @@ namespace Assets.Scripts
             }
             else if (photonStream.IsReading)
             {
-                bool lightObject = (bool)photonStream.ReceiveNext();
-                animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
-                animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
-                animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
-                animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
-                animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
-            }
-        }
+                string typ = (string)photonStream.ReceiveNext();
 
-        void checkGround()
-        {
-            Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f),
-    transform.position.z);
-            Vector3 direction = transform.TransformDirection(Vector3.down);
-            float distance = .75f;
-
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
-            {
-                Debug.DrawRay(origin, direction * distance, Color.red);
-                onGround = true;
-                animator.SetBool("isJumping", false);
-                animator.SetBool("isFalling", false);
-            }
-            else
-            {
-                animator.SetBool("isFalling", true);
-                onGround = false;
+                if (typ.Equals("AI"))
+                {
+                    animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
+                    animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
+                    animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
+                    animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
+                    animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
+                }
             }
         }
 
         private void Update()
         {
-            checkGround();
             //Check for sight and attack range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
@@ -88,8 +68,28 @@ namespace Assets.Scripts
             if (playerInSightRange) ChasePlayer();
         }
 
-        private void FixedUpdate()
+        Vector3 lastpos;
+        IEnumerator UpdateAIPath()
         {
+            while (gameObject.activeSelf)
+            {
+                yield return new WaitForSeconds(5f);
+                if (walkPointSet && !playerInSightRange)
+                {
+                    if (lastpos == walkPoint)
+                    {
+                        SearchWalkPoint();
+                    }
+                    else
+                    {
+                        lastpos = walkPoint;
+                    }
+                }
+                else if (!playerInSightRange)
+                {
+                    SearchWalkPoint();
+                }
+            }
         }
 
         GameObject GetClosestEnemy(FirstPersonController[] enemies)
@@ -113,26 +113,20 @@ namespace Assets.Scripts
 
         private void Patroling()
         {
-            if (!agent.pathPending)
+            if (walkPointSet)
             {
-                if (!walkPointSet) SearchWalkPoint();
-
-                if (walkPointSet)
-                {
-                    animator.SetBool("isWalking", true);
-                    agent.SetDestination(walkPoint);
-                    transform.LookAt(walkPoint);
-                }
-                else
-                {
-                    animator.SetBool("isWalking", false);
-                }
+                animator.SetBool("isWalking", true);
 
                 Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
                 //Walkpoint reached
                 if (distanceToWalkPoint.magnitude < 10f)
                     walkPointSet = false;
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+                SearchWalkPoint();
             }
         }
 
@@ -144,8 +138,10 @@ namespace Assets.Scripts
 
             walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-            if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-                walkPointSet = true;
+            walkPointSet = true;
+
+            if (agent.destination != walkPoint)
+                agent.SetDestination(walkPoint);
         }
 
         private void ChasePlayer()
@@ -171,17 +167,12 @@ namespace Assets.Scripts
                 animator.SetBool("isSprinting", true);
                 Vector3 positonOfUser = targetPlayer.position;
                 agent.SetDestination(positonOfUser);
-                transform.LookAt(new Vector3(positonOfUser.x, positonOfUser.z));
-            } else
+            }
+            else
             {
                 animator.SetBool("isSprinting", false);
                 animator.SetBool("isWalking", false);
             }
-        }
-
-        private void DestroyEnemy()
-        {
-            Destroy(gameObject);
         }
 
         private void OnDrawGizmosSelected()

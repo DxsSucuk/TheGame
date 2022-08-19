@@ -186,6 +186,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonStream.IsWriting)
         {
+            photonStream.SendNext("PLAYER");
             photonStream.SendNext(lightObject.activeSelf);
             photonStream.SendNext(animator.GetBool("isWalking"));
             photonStream.SendNext(animator.GetBool("isSprinting"));
@@ -195,12 +196,17 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if (photonStream.IsReading)
         {
-            lightObject.SetActive((bool)photonStream.ReceiveNext());
-            animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
-            animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
-            animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
-            animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
-            animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
+            string typ = (string)photonStream.ReceiveNext();
+
+            if (typ.Equals("PLAYER"))
+            {
+                lightObject.SetActive((bool)photonStream.ReceiveNext());
+                animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
+                animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
+                animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
+                animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
+                animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
+            }
         }
     }
 

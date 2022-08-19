@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3369286}
   - component: {fileID: 2349498}
   - component: {fileID: 6523440}
+  - component: {fileID: 1709804688085612451}
   m_Layer: 0
   m_Name: Villa2_Deco_Column_Top_B
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9159956, y: 2.3000023, z: 1.9737351}
   m_Center: {x: -0.041276217, y: 1.1500012, z: -0.013132453}
+--- !u!208 &1709804688085612451
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177144}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.762, y: 1.1500001, z: 0.762}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.23700002, y: 1.1500001, z: -0.238}
+  m_TimeToStationary: 0.5

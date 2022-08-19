@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3375242}
   - component: {fileID: 2326650}
   - component: {fileID: 6518976}
+  - component: {fileID: 7372365089283779230}
   m_Layer: 0
   m_Name: Villa1_Base_Mid_B
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.6000023, y: 0.9900006, z: 4.8}
   m_Center: {x: 2, y: 0.4950003, z: 2.4}
+--- !u!208 &7372365089283779230
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162016}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.8000002, y: 0.49500003, z: 2.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2, y: 0.49500003, z: 2.4}
+  m_TimeToStationary: 0.5

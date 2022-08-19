@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3394514}
   - component: {fileID: 2342788}
   - component: {fileID: 6443022}
+  - component: {fileID: 4608292611149695546}
   m_Layer: 0
   m_Name: IndBuilding1_Wall_Cor_A
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 37d91a4351675e94bb7bf7a5eec9cde0, type: 3}
+--- !u!208 &4608292611149695546
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131814}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.6, y: 2.5010002, z: 1.6}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.6, y: 2.5010002, z: -1.4000001}
+  m_TimeToStationary: 0.5

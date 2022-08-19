@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3304470}
   - component: {fileID: 2356436}
   - component: {fileID: 6513208}
+  - component: {fileID: 8243531691058479114}
   m_Layer: 0
   m_Name: Indbuilding1_Door_A
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6427966, y: 3.1999998, z: 0.21352449}
   m_Center: {x: -0.7966116, y: 1.5999999, z: -0.0023651086}
+--- !u!208 &8243531691058479114
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158272}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.82100004, y: 1.6, z: 0.10700001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.79700005, y: 1.6, z: -0.002}
+  m_TimeToStationary: 0.5

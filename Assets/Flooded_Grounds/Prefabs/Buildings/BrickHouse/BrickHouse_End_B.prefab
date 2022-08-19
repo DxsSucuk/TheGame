@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3385596}
   - component: {fileID: 2349084}
   - component: {fileID: 6474426}
+  - component: {fileID: 268268914343758011}
   m_Layer: 0
   m_Name: BrickHouse_End_B
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: ecb3f7ff52f7ee249b243771c5d9d9d0, type: 3}
+--- !u!208 &268268914343758011
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107484}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.695, y: 9.377001, z: 6.4880004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.6930001, y: 9.365001, z: 0.013}
+  m_TimeToStationary: 0.5

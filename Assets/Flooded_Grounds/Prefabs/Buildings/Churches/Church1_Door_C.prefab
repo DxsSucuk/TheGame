@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3395570}
   - component: {fileID: 2301468}
   - component: {fileID: 6598792}
+  - component: {fileID: 2269616309798366852}
   m_Layer: 0
   m_Name: Church1_Door_C
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.826873, y: 3.5056815, z: 0.17327003}
   m_Center: {x: -0.88864976, y: 1.7528408, z: -0.009187527}
+--- !u!208 &2269616309798366852
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133762}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.91300005, y: 1.7530001, z: 0.091000006}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.88900006, y: 1.7530001, z: -0.001}
+  m_TimeToStationary: 0.5

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3373340}
   - component: {fileID: 2385174}
   - component: {fileID: 6527430}
+  - component: {fileID: 7533635479164282568}
   m_Layer: 0
   m_Name: Villa2_Deco_Beam_A_2x
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.20000035, z: 8}
   m_Center: {x: 0.000000059604645, y: 0.029999822, z: -4}
+--- !u!208 &7533635479164282568
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188724}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.3, y: 0.1, z: 4}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.030000001, z: -4}
+  m_TimeToStationary: 0.5

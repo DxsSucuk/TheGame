@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3395030}
   - component: {fileID: 2355160}
   - component: {fileID: 6595826}
+  - component: {fileID: 2491397251728676063}
   m_Layer: 0
   m_Name: BrickHouse_Door_A
   m_TagString: Untagged
@@ -97,3 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.748645, y: 3.6, z: 0.34974647}
   m_Center: {x: -0.84953576, y: 1.8, z: -0.011751741}
+--- !u!208 &2491397251728676063
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166910}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.874, y: 1.8000001, z: 0.17500001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.85, y: 1.8000001, z: -0.012}
+  m_TimeToStationary: 0.5
