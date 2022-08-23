@@ -27,6 +27,8 @@ namespace Assets.Scripts
         public float sightRange;
         public bool playerInSightRange;
 
+        public bool permaFollowPlayer;
+
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -38,11 +40,14 @@ namespace Assets.Scripts
             if (photonStream.IsWriting)
             {
                 photonStream.SendNext("AI");
-                photonStream.SendNext(animator.GetBool("isWalking"));
-                photonStream.SendNext(animator.GetBool("isSprinting"));
-                photonStream.SendNext(animator.GetBool("isJumping"));
-                photonStream.SendNext(animator.GetBool("isFalling"));
-                photonStream.SendNext(animator.GetBool("isCrouching"));
+                if (animator != null)
+                {
+                    photonStream.SendNext(animator.GetBool("isWalking"));
+                    photonStream.SendNext(animator.GetBool("isSprinting"));
+                    photonStream.SendNext(animator.GetBool("isJumping"));
+                    photonStream.SendNext(animator.GetBool("isFalling"));
+                    photonStream.SendNext(animator.GetBool("isCrouching"));
+                }
             }
             else if (photonStream.IsReading)
             {
@@ -50,11 +55,14 @@ namespace Assets.Scripts
 
                 if (typ.Equals("AI"))
                 {
-                    animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
-                    animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
-                    animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
-                    animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
-                    animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
+                    if (animator != null)
+                    {
+                        animator.SetBool("isWalking", (bool)photonStream.ReceiveNext());
+                        animator.SetBool("isSprinting", (bool)photonStream.ReceiveNext());
+                        animator.SetBool("isJumping", (bool)photonStream.ReceiveNext());
+                        animator.SetBool("isFalling", (bool)photonStream.ReceiveNext());
+                        animator.SetBool("isCrouching", (bool)photonStream.ReceiveNext());
+                    }
                 }
             }
         }
@@ -62,10 +70,11 @@ namespace Assets.Scripts
         private void Update()
         {
             //Check for sight and attack range
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            if (!permaFollowPlayer)
+                playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-            if (!playerInSightRange) Patroling();
-            if (playerInSightRange) ChasePlayer();
+            if (!playerInSightRange && !permaFollowPlayer) Patroling();
+            if (playerInSightRange || permaFollowPlayer) ChasePlayer();
         }
 
         Vector3 lastpos;
@@ -74,7 +83,7 @@ namespace Assets.Scripts
             while (gameObject.activeSelf)
             {
                 yield return new WaitForSeconds(5f);
-                if (walkPointSet && !playerInSightRange)
+                if (walkPointSet && !playerInSightRange && !permaFollowPlayer)
                 {
                     if (lastpos == walkPoint)
                     {
@@ -85,7 +94,7 @@ namespace Assets.Scripts
                         lastpos = walkPoint;
                     }
                 }
-                else if (!playerInSightRange)
+                else if (!playerInSightRange && !permaFollowPlayer)
                 {
                     SearchWalkPoint();
                 }
@@ -125,7 +134,8 @@ namespace Assets.Scripts
             }
             else
             {
-                animator.SetBool("isWalking", false);
+                if (animator != null)
+                    animator.SetBool("isWalking", false);
                 SearchWalkPoint();
             }
         }
@@ -155,7 +165,7 @@ namespace Assets.Scripts
             {
                 Vector3 directionToTarget = targetPlayer.position - transform.position;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
-                if (dSqrToTarget >= sightRange)
+                if (dSqrToTarget <= sightRange)
                 {
                     targetPlayer = GetClosestEnemy(GameObject.FindObjectsOfType<FirstPersonController>()).transform;
                 }
@@ -163,15 +173,22 @@ namespace Assets.Scripts
 
             if (targetPlayer != null)
             {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isSprinting", true);
+                if (animator != null)
+                {
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isSprinting", true);
+                }
+
                 Vector3 positonOfUser = targetPlayer.position;
                 agent.SetDestination(positonOfUser);
             }
             else
             {
-                animator.SetBool("isSprinting", false);
-                animator.SetBool("isWalking", false);
+                if (animator != null)
+                {
+                    animator.SetBool("isSprinting", false);
+                    animator.SetBool("isWalking", false);
+                }
             }
         }
 
@@ -179,12 +196,9 @@ namespace Assets.Scripts
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, sightRange);
-            if (walkPoint != null)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(walkPoint, 10);
-                Gizmos.DrawLine(transform.position, walkPoint);
-            }
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(walkPoint, 10);
+            Gizmos.DrawLine(transform.position, walkPoint);
         }
     }
 }

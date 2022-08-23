@@ -305,6 +305,21 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
             if (!isPaused && !photonChat.isChatting)
             {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+                    {
+                        Interactable interactable = hit.collider.GetComponent<Interactable>();
+                        if (interactable != null)
+                        {
+                            if (interactable.interactableArea <= (transform.position - interactable.transform.position).magnitude)
+                                interactable.InteractWithInteractable();
+                        }
+                    }
+                }
+                
                 #region Camera
 
                 // Control camera movement

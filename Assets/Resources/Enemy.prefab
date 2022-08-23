@@ -484,6 +484,7 @@ MonoBehaviour:
   walkPointRange: 50
   sightRange: 30
   playerInSightRange: 0
+  permaFollowPlayer: 0
 --- !u!114 &852721554683887999
 MonoBehaviour:
   m_ObjectHideFlags: 0
