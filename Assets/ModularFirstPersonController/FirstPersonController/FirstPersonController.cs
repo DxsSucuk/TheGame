@@ -314,8 +314,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
                         Interactable interactable = hit.collider.GetComponent<Interactable>();
                         if (interactable != null)
                         {
-                            if (interactable.interactableArea <= (transform.position - interactable.transform.position).magnitude)
-                                interactable.InteractWithInteractable();
+                            interactable.InteractWithInteractable();
                         }
                     }
                 }
